@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NamSpace</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Lottie Web Player CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.4/lottie.min.js"></script>
+</head>
+<body>
+  <header>
+    <div class="header-title">
+      <!-- App logo with responsive sizing -->
+      <img src="assets/icon.png" alt="NIMFILE Icon" class="app-logo">
+    </div>
+  </header>
+  <main>
+    <h1 class="visually-hidden">PeerJS Session Demo</h1>
+    <!-- Stack Start: collapsed by default, host expands via JS -->
+    <div id="infoStack" class="exp-stack stack-collapsed">
+      <!-- stackToggleBtn is initially hidden and shown when a session starts -->
+      <button id="stackToggleBtn" class="stack-toggle-btn hidden" title="Expand/collapse details" aria-label="Expand/collapse details">
+        <span class="material-icons stack-arrow">expand_more</span>
+        <span class="stack-toggle-label">Show details</span>
+        <span id="collapsedUserSummary"></span>
+      </button>
+      <div class="stack-content">
+        <!-- startBtn is wrapped in a container for centering -->
+        <div id="startSessionContainer" class="start-session-container">
+          <!-- Lottie animation container added above the start session button -->
+          <div class="image-container">
+            <!-- This div will host the Lottie animation -->
+            <div id="lottie-animation-container" style="width: 100%; height: 100%;"></div>
+          </div>
+          <button id="startBtn" class="primary-btn">Start Session</button>
+        </div>
+        <div id="sessionInfo" class="hidden card">
+          <!-- Removed "Your PeerJS ID" line -->
+          <div id="linkSection" class="hidden">
+            <strong>Join Link:</strong>
+            <div class="join-link-row">
+              <a href="#" id="joinLink" target="_blank"></a>
+              <button id="copyLinkBtn" title="Copy link" aria-label="Copy link" class="icon-btn">
+                <span class="material-icons">content_copy</span>
+              </button>
+            </div>
+            <div class="qr-container" id="qrCodeContainer"> <!-- Added ID for easier hiding -->
+              <span class="qr-label">Scan QR Code to Join</span>
+              <div id="qrcode"></div>
+            </div>
+          </div>
+        </div>
+        <div id="statusSection" class="card hidden">
+          <strong>Status:</strong> <span id="status">Idle</span>
+        </div>
+        <section id="usernameSection" class="hidden card">
+          <form id="usernameForm" autocomplete="off">
+            <label for="usernameInput"><strong>Username:</strong></label>
+            <input id="usernameInput" type="text" maxlength="20" />
+            <button type="submit" class="primary-btn">Set</button>
+          </form>
+        </section>
+        <section id="peersSection" class="hidden card">
+          <strong>Connected Peers:</strong>
+          <ul id="peersList"></ul>
+        </section>
+      </div>
+    </div>
+    <!-- Stack End -->
+
+    <section id="chatSection" class="hidden card chat-section">
+      <div id="chatArea" class="chat-area"></div>
+      <form id="chatForm" autocomplete="off" class="chat-form">
+        <button id="fileBtn" type="button" class="icon-btn file-btn" title="Send file" aria-label="Send file">
+          <span class="material-icons">attach_file</span>
+        </button>
+        <button id="bingeBtn" type="button" class="icon-btn binge-btn" title="Binge" aria-label="Binge">
+          <span class="material-icons">local_activity</span>
+        </button>
+        <input id="fileInput" type="file" style="display:none" />
+        <input id="chatInput" type="text" placeholder="Type a message..." autocomplete="off" required />
+        <button type="submit" class="primary-btn send-btn">
+          <span class="material-icons">send</span>
+        </button>
+      </form>
+    </section>
+  </main>
+  <section id="bingeSection" class="hidden"></section>
+  <template id="bingeTemplate">
+    <div class="binge-root">
+      <!-- Binge UI will be rendered here by JS -->
+    </div>
+  </template>
+    <div class="text-buttons-container">
+      <a href="terms.html" target="_blank" class="text-button">Terms & Conditions</a>
+      <span class="text-button-separator">•</span>
+      <a href="about.html" target="_blank" class="text-button">About</a>
+      <!-- Theme toggle button moved here -->
+      <span class="text-button-separator">•</span>
+      <button id="themeToggleBtn" title="Toggle theme" aria-label="Toggle theme" class="theme-toggle-btn">
+        <span class="theme-toggle-label">Light</span>
+        <span class="theme-toggle-switch">
+          <span class="switch-thumb"></span>
+        </span>
+        <span class="theme-toggle-label">Dark</span>
+      </button>
+    </div>
+  <script src="https://cdn.jsdelivr.net/npm/web-streams-polyfill@2.0.2/dist/ponyfill.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/streamsaver@2.0.3/StreamSaver.min.js"></script>
+  <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script type="module" src="main.js" defer></script>
+  <script>
+    // Initialize Lottie animation
+    document.addEventListener('DOMContentLoaded', () => {
+      lottie.loadAnimation({
+        container: document.getElementById('lottie-animation-container'), // the DOM element that will contain the animation
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: 'assets/signal_load.json' // the path to the animation json
+      });
+    });
+  </script>
+</body>
+</html>

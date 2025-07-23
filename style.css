@@ -1,0 +1,1483 @@
+/* ================================
+NamSpace - Minimal Messenger Theme
+================================
+Clean, simple, and functional design
+*/
+
+/* --- System Font Stack --- */
+:root {
+  --font-family: -apple-system, BlinkMacMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  --font-size-base: 14px;
+  --font-size-lg: 16px;
+  --font-size-sm: 12px;
+  --radius: 8px;
+  --transition: 0.2s ease;
+  --bubble-in: 0.2s ease;
+
+  /* 8-unit spacing system */
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 40px;
+
+  /* Netflix Dark theme - Professional Shades */
+  --color-primary: #E50914; /* Netflix Red */
+  --color-bg: #141414; /* Very dark background */
+  --color-bg-alt: #262626; /* Slightly lighter dark for alternate sections/form backgrounds */
+  --color-surface: #1C1C1C; /* Surface color for chat area and main cards */
+  --color-card: #1C1C1C; /* Card background, consistent with surface */
+  --color-border: transparent; /* Removed border */
+  --color-accent: var(--color-primary); /* Accent color is Netflix Red */
+  --color-accent-hover: #B20710; /* Darker Netflix Red for hover states */
+  --color-accent-muted: #3A3A3A; /* Muted accent for banners/less prominent elements */
+  --color-bubble-in: #383838; /* Incoming message bubble (more distinct neutral dark) */
+  --color-bubble-out: #E50914; /* Outgoing message bubble (Netflix Red) */
+  --color-bubble-out-text: #fff; /* Text on outgoing bubble */
+  --color-bubble-in-text: #F5F5F1; /* Text on incoming bubble (Neutral light) */
+  --color-text: #F5F5F1; /* Main text color (Neutral light) */
+  --color-text-secondary: #A0A0A0; /* Secondary text color (Distinct neutral grey) */
+  --color-text-muted: #707070; /* Muted text color (Darker neutral grey) */
+  --color-btn-bg: #333333; /* Button background (distinct neutral dark) */
+  --color-btn-text: #F5F5F1; /* Button text */
+  --color-btn-hover: #4A4A4A; /* Button hover background (subtly lighter) */
+  --color-input-bg: #1C1C1C; /* Input background, consistent with surface */
+  --color-input-border: transparent; /* Removed input border */
+  --color-filebar: #262626; /* File message background, consistent with bg-alt */
+  --color-progress: #E50914; /* Progress bar color (Netflix Red) */
+  --color-progress-bg: #333333; /* Progress bar background (distinct neutral dark) */
+  --icon-filter: invert(1) grayscale(0.1); /* Filter for icons in dark theme */
+  --shadow-card: none; /* Removed shadow */
+  --shadow-header: none; /* Removed shadow */
+
+  /* Define estimated height for fixed chat section on mobile */
+  --mobile-fixed-chat-height: 200px; /* Adjust as needed based on chat area + form */
+
+  /* Define header and footer heights for binge layout calculation */
+  --header-height: 60px;
+  --footer-height: 60px; /* Approximate height for text-buttons-container */
+}
+
+/* --- Theme Variables: Light --- */
+:root.light-theme {
+  --color-bg: #F5F5F1; /* Light background (Neutral light) */
+  --color-bg-alt: #E8E8E8; /* Slightly darker light for alternate sections/form backgrounds */
+  --color-surface: #FFFFFF; /* Surface color for chat area and main cards (pure white) */
+  --color-card: #F0F0F0; /* Card background (subtly off-white for distinction) */
+  --color-border: transparent; /* Removed border */
+  --color-accent: #E50914; /* Netflix Red */
+  --color-accent-hover: #B20710; /* Darker Netflix Red for hover states */
+  --color-accent-muted: #DDDDDD; /* Muted accent for banners/less prominent elements */
+  --color-bubble-in: #EFEFEF; /* Incoming message bubble (more distinct light grey) */
+  --color-bubble-out: #E50914; /* Outgoing message bubble (Netflix Red) */
+  --color-bubble-out-text: #fff; /* Text on outgoing bubble */
+  --color-bubble-in-text: #141414; /* Text on incoming bubble (Dark neutral) */
+  --color-text: #141414; /* Main text color (Dark neutral) */
+  --color-text-secondary: #505050; /* Secondary text color (Distinct neutral grey) */
+  --color-text-muted: #808080; /* Lighter neutral grey) */
+  --color-btn-bg: #E0E0E0; /* Button background (distinct neutral light) */
+  --color-btn-text: #141414; /* Button text */
+  --color-btn-hover: #D5D5D5; /* Button hover background (subtly darker) */
+  --color-input-bg: #FFFFFF; /* Input background, consistent with surface */
+  --color-input-border: transparent; /* Removed input border */
+  --color-filebar: #E8E8E8; /* File message background, consistent with bg-alt */
+  --color-progress: #E50914; /* Progress bar color (Netflix Red) */
+  --color-progress-bg: #CCCCCC; /* Progress bar background (distinct neutral light) */
+  --icon-filter: invert(0) grayscale(0.6); /* Filter for icons in light theme */
+  --shadow-card: none; /* Removed shadow */
+  --shadow-header: none; /* Removed shadow */
+}
+
+/* --- Reset --- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+html { font-family: var(--font-family); font-size: var(--font-size-base); background: var(--color-bg);}
+body {
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: background 0.2s,color 0.2s;
+  display: flex; /* Use flexbox for body */
+  flex-direction: column; /* Stack header, main, footer vertically */
+  overflow: hidden; /* Prevent scrolling on the body itself */
+  min-height: 0 !important; /* Ensure body can shrink */
+  height: 100%; /* Ensure body takes full height of viewport */
+  max-height: 100%; /* Ensure body doesn't exceed viewport height */
+}
+a { color: var(--color-accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* --- Header --- */
+header {
+  width: 100vw;
+  background: var(--color-bg);
+  display: flex;
+  justify-content: center; /* Centered the header-title */
+  align-items: center;
+  border-bottom: none; /* Removed border */
+  padding: var(--space-sm);
+  min-height: var(--header-height); /* Use variable */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  margin-bottom: var(--space-sm);
+  box-shadow: none; /* Removed shadow */
+  flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+/* When binge session is active, header should remain visible */
+body:has(#bingeSection:not(.hidden)) header {
+  /* Removed previous overrides to allow header to be visible */
+  margin-bottom: var(--space-sm); /* Restore default margin */
+  padding-bottom: var(--space-sm); /* Restore default padding */
+  min-height: var(--header-height); /* Restore default min-height */
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+/* Responsive logo sizing */
+.app-logo {
+  max-width: 120px; /* Adjust as needed for desired max width */
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Remove extra space below image */
+  padding: 5px 0; /* Add some vertical padding */
+}
+@media (max-width: 700px) {
+  .app-logo {
+    max-width: 100px; /* Smaller on mobile */
+  }
+}
+@media (max-width: 500px) {
+  .app-logo {
+    max-width: 80px; /* Even smaller on very small screens */
+  }
+}
+
+.app-icon {
+  font-size: 1.5em;
+  color: var(--color-accent);
+  filter: var(--icon-filter);
+  vertical-align: middle;
+}
+.app-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.theme-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: var(--color-btn-bg);
+  border: none; /* Removed border */
+  cursor: pointer;
+  outline: none;
+  padding: var(--space-xxs) var(--space-xs);
+  border-radius: var(--radius);
+  font: inherit;
+  min-width: 90px;
+  font-weight: 500;
+  transition: all var(--transition); /* Changed from background, border */
+}
+.theme-toggle-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+}
+.theme-toggle-switch {
+  width: 36px; height: 20px; background: var(--color-btn-bg); border-radius: 10px; border: none; /* Removed border */
+  margin: 0 0.2em; display: inline-block; position: relative; transition: background var(--transition);
+}
+.theme-toggle-btn.light .theme-toggle-switch { background: #eee; }
+.theme-toggle-btn.dark .theme-toggle-switch { background: #292929; }
+.switch-thumb {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--color-accent);
+  position: absolute;
+  top: 1px;
+  left: 2px;
+  transition: left var(--transition), background var(--transition);
+}
+.theme-toggle-btn.light .switch-thumb { left: 2px; }
+.theme-toggle-btn.dark .switch-thumb { left: 18px; }
+.theme-toggle-label {
+  font-size: 0.9em;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  user-select: none;
+}
+
+/* --- Main Layout --- */
+main {
+  max-width: 1200px;
+  margin: 0 auto; /* Center the main content horizontally */
+  padding: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  flex-grow: 1; /* Allow main to grow and push footer down */
+  box-sizing: border-box;
+  align-items: center; /* Center children horizontally */
+  justify-content: center; /* Center children vertically */
+  overflow: hidden !important; /* Prevent main from scrolling */
+  min-height: 0 !important; /* Crucial for allowing it to shrink */
+  height: 100%; /* Ensure it takes full height of parent */
+  max-height: 100%; /* Ensure it doesn't exceed parent height */
+}
+
+/* When binge session is active, hide main completely */
+body:has(#bingeSection:not(.hidden)) main {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  min-height: 0 !important;
+  flex-grow: 0 !important;
+  overflow: hidden !important;
+}
+
+/* When chat is hidden, remove the min-height from main */
+main:has(#chatSection.hidden) {
+  min-height: auto;
+}
+
+/* --- Card Style for Sections --- */
+.card {
+  background: var(--color-card);
+  border-radius: var(--radius);
+  border: none; /* Removed border */
+  box-shadow: none; /* Removed shadow */
+  padding: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  transition: background var(--transition), border var(--transition);
+  width: 100%; /* Ensure cards take full width of their container */
+}
+@media (max-width: 700px) {
+  .card { border-radius: 0; padding: var(--space-xs); margin-bottom: var(--space-xs); }
+}
+#statusSection { margin-bottom: var(--space-xs); }
+
+/* --- Buttons --- */
+button, .primary-btn, .icon-btn {
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  border-radius: var(--radius);
+  border: none;
+  outline: none;
+  transition: all var(--transition);
+  font-weight: 500;
+  cursor: pointer;
+}
+.primary-btn {
+  background: var(--color-accent);
+  color: #fff;
+  padding: var(--space-xs) var(--space-md);
+  min-width: 120px;
+  margin-top: var(--space-xs);
+  margin-bottom: var(--space-xs);
+  font-size: var(--font-size-base);
+}
+.primary-btn:disabled { opacity: .6; cursor: not-allowed; }
+.primary-btn:hover, .primary-btn:focus-visible {
+  background: var(--color-accent-hover);
+}
+.icon-btn {
+  background: var(--color-btn-bg);
+  color: var(--color-text-secondary);
+  border: none; /* Removed border */
+  padding: var(--space-xxs);
+  border-radius: var(--radius);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+  margin: 0 var(--space-xxs);
+  width: 32px;
+  height: 32px;
+}
+.icon-btn:hover, .icon-btn:focus-visible {
+  background: var(--color-btn-hover);
+  color: var(--color-accent);
+  border-color: transparent; /* Removed border */
+}
+#copyLinkBtn .material-icons,
+#fileBtn .material-icons {
+  font-size: 1.2em;
+  color: inherit;
+}
+
+.send-btn {
+  background: var(--color-accent);
+  color: #fff;
+  min-width: 40px;
+  height: 40px;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.send-btn .material-icons { 
+  font-size: 1.2em; 
+}
+
+.send-btn:hover, 
+.send-btn:focus-visible { 
+  background: var(--color-accent-hover); 
+}
+
+.binge-btn {
+  background: var(--color-btn-bg);
+  color: var(--color-text);
+  border: none; /* Removed border */
+  border-radius: var(--radius);
+  padding: var(--space-xxs);
+  font-size: 1em;
+  margin: 0 var(--space-xxs);
+  transition: all var(--transition);
+}
+.binge-btn:hover, .binge-btn:focus-visible {
+  background: var(--color-btn-hover);
+  border-color: transparent; /* Removed border */
+}
+
+/* --- Inputs & Forms --- */
+input[type="text"], input[type="file"] {
+  font-size: var(--font-size-base);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius);
+  border: none; /* Removed border */
+  background: var(--color-input-bg);
+  color: var(--color-text);
+  font-family: inherit;
+  outline: none;
+  transition: border var(--transition);
+  margin-bottom: var(--space-xs);
+}
+input[type="text"]:focus {
+  border-color: var(--color-accent);
+}
+label {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  margin-right: var(--space-xs);
+  font-weight: 500;
+}
+
+/* --- Join Link & QR --- */
+.join-link-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: var(--color-bg-alt);
+  border-radius: var(--radius);
+  padding: var(--space-xs) var(--space-sm);
+  margin-bottom: var(--space-sm);
+  font-size: var(--font-size-base);
+}
+#joinLink {
+  color: var(--color-accent);
+  font-size: var(--font-size-base);
+  text-decoration: none;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+.qr-container {
+  padding: var(--space-sm) 0 0 0;
+  text-align: center;
+}
+.qr-label {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-xs);
+  display: block;
+}
+#qrcode {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: var(--space-sm);
+  margin: var(--space-xs) auto 0 auto;
+  width: fit-content;
+  box-shadow: none; /* Removed shadow */
+}
+
+/* --- Peers List --- */
+#peersList {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-xs) 0 0 0;
+}
+#peersList li {
+  padding: var(--space-xs) 0;
+  border-bottom: none; /* Removed border */
+  display: flex;
+  gap: var(--space-xs);
+  align-items: center;
+  font-size: var(--font-size-sm);
+}
+.peer-color-dot {
+  width: 0.8em;
+  height: 0.8em;
+  border-radius: 50%;
+  margin-right: var(--space-xxs);
+}
+.peer-id {
+  font-family: monospace;
+  color: var(--color-text-muted);
+}
+.peer-status {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-left: auto;
+  margin-right: var(--space-xxs);
+  font-weight: 500;
+}
+.peer-status.connected { color: #27ae60; }
+.peer-status.disconnected, .peer-status.reconnecting { color: #b14a4a; }
+.peer-username { font-weight: 500; color: var(--color-text); margin-right: var(--space-xxs); }
+
+/* --- Chat Container Structure --- */
+#chatSection.chat-section {
+  flex: 1; /* Takes remaining space in main on desktop */
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  min-height: 0 !important; /* Crucial for allowing it to shrink */
+  border-radius: var(--radius);
+  box-shadow: none; /* Removed shadow */
+  position: relative;
+  overflow: hidden;
+  background: var(--color-surface);
+  width: 100%; /* Ensure chat section takes full width of its container */
+}
+
+#chatArea.chat-area {
+  flex: 1 1 auto;
+  height: 400px; /* Fixed height for chat area on desktop */
+  overflow-y: auto;
+  background: var(--color-surface);
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  /* Removed width: 100% here, will be handled by flex container */
+  box-sizing: border-box;
+  margin: 0;
+  min-height: 0 !important; /* Crucial for allowing it to shrink */
+}
+
+.chat-form {
+  flex: 0 0 auto;
+  position: relative; /* Default for desktop */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  background: var(--color-bg-alt);
+  border-top: none; /* Removed border */
+  border-radius: 0 0 var(--radius) var(--radius);
+  /* Removed width: 100% here, will be handled by flex container */
+  margin: 0;
+  padding: var(--space-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  box-sizing: border-box;
+  min-height: 60px;
+}
+
+#chatInput {
+  flex: 1;
+  height: 40px;
+  border-radius: var(--radius);
+  font-size: var(--font-size-base);
+  border: none; /* Removed border */
+  background: var(--color-input-bg);
+  color: var(--color-text);
+  outline: none;
+  transition: border-color var(--transition);
+  padding: 0 var(--space-sm);
+  margin: 0 var(--space-xxs);
+}
+
+#chatInput:focus { 
+  border-color: var(--color-accent); 
+}
+
+#fileBtn { 
+  margin-left: var(--space-xxs); 
+  margin-right: var(--space-xs); 
+}
+
+/* Binge chat specific styles */
+.binge-chat-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto; /* Default flex for mobile */
+  background: var(--color-surface);
+  padding: 0;
+  margin: 0;
+  border-radius: var(--radius); /* Default radius for mobile */
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  min-height: 0 !important; /* Ensure chat wrapper can shrink */
+  /* Removed width: 100%; to allow flex to control width */
+}
+
+.binge-chat-wrapper .chat-area {
+  border-radius: 0;
+  background: var(--color-bg); /* Changed from transparent to match binge header */
+  margin: 0;
+  padding: var(--space-sm);
+  flex: 1;
+  height: 400px; /* Fixed height for binge chat area on desktop */
+  min-height: 0 !important; /* Crucial for allowing it to shrink */
+}
+
+/* New rule to specifically target #chatArea when inside #bingeChatWrapper */
+#bingeChatWrapper #chatArea {
+  background: var(--color-bg); /* Ensure this overrides general #chatArea styles */
+}
+
+
+.binge-chat-wrapper .chat-form {
+  border-radius: 0;
+  margin: 0;
+  /* Removed width: 100% here, will be handled by flex container */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 700px) {
+  /* Main layout for mobile */
+  main {
+    padding: 0; /* Remove padding from main */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* Stretch children horizontally */
+    justify-content: flex-start; /* Align children to the top */
+    height: auto; /* Allow main to determine its height based on content */
+    max-height: none; /* Remove max-height constraint */
+    min-height: 0 !important; /* Ensure it can shrink */
+    flex-grow: 1; /* Allow main to grow */
+  }
+
+  /* Adjust header margin for mobile */
+  header {
+    margin-bottom: 0;
+  }
+
+  /* Cards on mobile */
+  .card { 
+    padding: var(--space-xs); 
+    border-radius: 0; 
+    margin-bottom: var(--space-xs);
+  }
+  
+  /* Chat Section now participates in flex layout on mobile */
+  #chatSection.chat-section {
+    position: static; /* No longer fixed on mobile */
+    height: auto; /* Let content define height */
+    max-height: none; /* Remove max-height constraint */
+    flex: 1; /* Take remaining space within main */
+    border-radius: 0;
+    z-index: auto; /* Reset z-index */
+  }
+
+  /* Chat area and form adjustments */
+  .chat-area { 
+    padding: var(--space-xs); 
+    gap: var(--space-xs); 
+    height: auto; /* Remove fixed height */
+    flex: 1; /* Take remaining space within chatSection */
+    min-height: 100px !important; /* Ensure minimum size */
+    overflow-y: auto;
+    border-radius: 0;
+  }
+  
+  .chat-form { 
+    padding: var(--space-xs);
+    gap: var(--space-xs);
+    border-radius: 0;
+    min-height: 56px; /* A bit smaller for mobile */
+  }
+  
+  #chatInput {
+    height: 36px;
+    font-size: var(--font-size-base);
+    padding: 0 var(--space-sm);
+  }
+  
+  .send-btn {
+    min-width: 36px;
+    height: 36px;
+  }
+  
+  .send-btn .material-icons {
+    font-size: 1.2em;
+  }
+
+  /* Adjust main padding when keyboard is open (handled by JS) */
+  body.keyboard-open main {
+    /* No longer needs padding-bottom for fixed chat.
+       The visualViewport resize listener in main.js will naturally
+       reduce the available height for main, and flex items will adjust. */
+    padding-bottom: var(--keyboard-height, 0px); /* Only keyboard height */
+    transition: padding-bottom 0.2s ease-out; /* Smooth transition */
+  }
+}
+
+@media (max-width: 500px) {
+  /* Further adjustments for very small mobile screens */
+  .chat-area { 
+    padding: var(--space-xxs);
+    border-radius: 0;
+    min-height: 80px !important; /* Smaller min-height for very small screens */
+  }
+  
+  .chat-form { 
+    padding: var(--space-xxs);
+    border-radius: 0;
+  }
+  
+.message-tile { 
+    max-width: 98%; 
+  }
+}
+
+/* --- Chat Bubbles --- */
+.message-tile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxs);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius);
+  margin-bottom: 0;
+  max-width: 76%;
+  min-width: 60px;
+  font-size: var(--font-size-base);
+  position: relative;
+  border: none;
+  word-break: break-word;
+  animation: bubbleIn var(--bubble-in);
+}
+.message-tile.incoming {
+  align-self: flex-start;
+  background: var(--color-bubble-in);
+  color: var(--color-bubble-in-text);
+  border-bottom-left-radius: var(--radius);
+  border-top-left-radius: 0;
+}
+.message-tile.outgoing {
+  align-self: flex-end;
+  background: var(--color-bubble-out);
+  color: var(--color-bubble-out-text);
+  border-bottom-right-radius: var(--radius);
+  border-top-right-radius: 0;
+}
+@keyframes bubbleIn {
+  from { opacity: 0; transform: translateY(8px);}
+  to { opacity: 1; transform: none;}
+}
+.message-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary); /* Adjusted for message tile text color */
+  margin-bottom: var(--space-xxs);
+}
+.message-user-dot {
+  width: 18px; height: 18px; border-radius: 50%; background: var(--color-accent); flex-shrink: 0;
+}
+.message-username {
+  font-weight: 500;
+  color: inherit;
+}
+.message-timestamp {
+  color: var(--color-text-secondary); /* Adjusted for message tile text color */
+  font-size: var(--font-size-sm);
+  margin-left: auto;
+  padding-left: var(--space-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- File Message Bubble --- */
+.message-tile.file {
+  background: var(--color-filebar);
+  color: var(--color-text);
+  max-width: 98%;
+  margin: var(--space-xxs) 0;
+  border-radius: var(--radius);
+}
+.file-meta-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+  flex-wrap: wrap;
+}
+.file-icon {
+  font-size: 1.2em;
+  color: var(--color-accent);
+  filter: var(--icon-filter);
+}
+.file-name {
+  font-family: inherit;
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.file-size {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+.file-download-link, .file-cancel-link {
+  background: var(--color-btn-bg);
+  border: none; /* Removed border */
+  color: var(--color-text-secondary);
+  border-radius: var(--radius);
+  padding: var(--space-xxs);
+  margin-left: var(--space-xxs);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-size: 1em;
+}
+.file-download-link:hover, .file-cancel-link:hover {
+  background: var(--color-btn-hover);
+  color: var(--color-accent);
+  border-color: transparent; /* Removed border */
+}
+.file-download-link:disabled {
+  opacity: .43;
+  pointer-events: none;
+}
+.file-progress-bar {
+  width: 100%;
+  background: var(--color-progress-bg);
+  border-radius: 2px;
+  height: 4px;
+  margin: var(--space-xs) 0 var(--space-xxs);
+  overflow: hidden;
+}
+.file-progress-bar-inner {
+  background: var(--color-progress);
+  height: 100%;
+  border-radius: 2px;
+  width: 0;
+  transition: width var(--transition);
+}
+.file-status-msg {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-xxs);
+}
+
+/* --- Stack (Expandable Section) --- */
+.exp-stack {
+  margin: auto; /* Center vertically and horizontally */
+  border-radius: var(--radius);
+  box-shadow: none; /* Removed shadow */
+  background: none;
+  transition: box-shadow var(--transition);
+  position: relative;
+  overflow: hidden; /* Changed to hidden for accordion effect */
+  max-width: 600px;
+  width: 100%;
+  flex-shrink: 0; /* Prevent shrinking when other elements need space */
+  min-height: 0 !important; /* Crucial for allowing it to shrink */
+}
+.stack-toggle-btn {
+  width: 100%;
+  background: var(--color-btn-bg);
+  color: var(--color-text-secondary);
+  border: none; /* Removed border */
+  border-radius: var(--radius);
+  font-size: var(--font-size-base);
+  padding: var(--space-xs) var(--space-sm);
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  cursor: pointer;
+  outline: none;
+  transition: all var(--transition);
+  box-sizing: border-box;
+  z-index: 2;
+  position: relative;
+  font-weight: 500;
+}
+.stack-toggle-btn:focus-visible {
+  border-color: var(--color-accent);
+}
+.stack-toggle-label {
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  flex: 1;
+}
+.stack-arrow.material-icons {
+  transition: transform var(--transition);
+  font-size: 1.2em;
+  vertical-align: middle;
+  color: var(--color-accent);
+}
+.stack-collapsed .stack-arrow { transform: rotate(0deg);}
+.stack-expanded .stack-arrow  { transform: rotate(180deg);}
+.stack-content {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: max-height 0.5s ease-out, opacity 0.5s ease-out; /* Smoother transition */
+  background: none;
+}
+.stack-expanded .stack-content {
+  max-height: 1000px; /* Sufficiently large to contain content */
+  opacity: 1;
+  pointer-events: auto;
+  transition: max-height 0.5s ease-in, opacity 0.5s ease-in; /* Smoother transition */
+  background: none;
+}
+@media (max-width: 700px) {
+  .exp-stack { max-width: 100vw; }
+  .stack-toggle-btn { border-radius: 0; font-size: var(--font-size-base); padding: var(--space-xs);}
+}
+
+/* --- Utility --- */
+.hidden { display: none !important; }
+::-webkit-scrollbar { width: 6px; background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-surface); border-radius: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::selection { background: var(--color-accent); color: #fff; }
+/* Removed redundant mobile media queries for main/card/chat-area/chat-form/message-tile as they are now handled above */
+
+/* --- Accessibility: Hide h1 --- */
+.visually-hidden { position:absolute; left:-10000px; }
+
+/* --- Collapsed Section Summary --- */
+#collapsedUserSummary {
+  display: none;
+  margin-left: var(--space-xs);
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+}
+.stack-collapsed #collapsedUserSummary {
+  display: inline-flex;
+}
+.stack-expanded #collapsedUserSummary {
+  display: none;
+}
+
+.collapsed-user-dot {
+  width: 0.8em;
+  height: 0.8em;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: var(--space-xxs);
+  vertical-align: middle;
+}
+.collapsed-user-name {
+  margin-right: var(--space-xs);
+  vertical-align: middle;
+}
+
+/* --- Binge Section --- */
+#bingeSection {
+  flex: 1; /* Allows binge section to take remaining space in main */
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  display: flex; /* Ensure it's a flex container for binge-root */
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden !important; /* Prevent scrolling on bingeSection itself */
+  /* Calculate height to fill available space between header and footer */
+  height: calc(100vh - var(--header-height) - var(--footer-height));
+  min-height: 0 !important; /* Ensure it can shrink */
+  max-height: 100vh; /* Ensure it doesn't exceed viewport height */
+}
+
+/* Adjust body behavior when binge is active to keep header/footer visible */
+body:has(#bingeSection:not(.hidden)) {
+  overflow: hidden; /* Keep body overflow hidden to manage internal scrolling */
+  /* Ensure body is a flex container to distribute space */
+  display: flex;
+  flex-direction: column;
+}
+
+body:has(#bingeSection:not(.hidden)) #bingeSection {
+  /* Remove fixed positioning and full viewport sizing */
+  position: static; /* Position normally within the flex layout */
+  width: 100%; /* Take full width of parent */
+  height: auto; /* Allow height to be determined by flex-grow */
+  z-index: auto; /* Reset z-index */
+  /* Keep these for flex behavior within the body */
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg); /* Keep background */
+  margin: 0 !important; /* Remove specific margins */
+  padding: 0 !important; /* Remove specific paddings */
+  flex-grow: 1; /* Make it fill available space between header and footer */
+}
+
+.binge-root {
+  display: flex;
+  flex-direction: column; /* Always column for binge-root itself */
+  align-items: stretch;
+  width: 100%;
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  box-shadow: none; /* Removed shadow */
+  padding: var(--space-sm); /* Keep padding here for the whole content */
+  margin: 0 auto; /* Center horizontally, remove bottom margin to allow full height */
+  max-width: 1200px;
+  margin-top: 0 !important;
+  position: relative;
+  overflow: hidden !important;
+  flex: 1; /* Allows binge-root to fill available space within bingeSection */
+  z-index: 0; /* Ensure children can be absolutely positioned */
+  min-height: 0 !important; /* Ensure it can shrink */
+  height: 100%; /* Ensure it takes full height of parent */
+  max-height: 100%; /* Ensure it doesn't exceed parent height */
+}
+
+/* Ensure binge-root fills available space and removes its own margins/padding when binge is active */
+#bingeSection:not(.hidden) .binge-root {
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: var(--space-sm) !important; /* Keep padding */
+  flex: 1;
+}
+
+/* Full-session ambient background */
+.binge-root .binge-ambient-bg,
+#bingeSection .binge-ambient-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  opacity: 0.13;
+  filter: blur(100px) saturate(180%);
+  background: linear-gradient(45deg, var(--color-accent), #f4c542);
+  transform: scale(1.5);
+  transition: all 1s ease;
+  pointer-events: none;
+  border-radius: var(--radius);
+}
+
+/* Ensure all other binge-root children are above the bg */
+.binge-root > *:not(.binge-ambient-bg),
+#bingeSection > *:not(.binge-ambient-bg) {
+  position: relative;
+  z-index: 1;
+}
+
+.binge-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm); /* Keep padding here */
+  border-bottom: none;
+  background: var(--color-bg);
+  border-radius: var(--radius) var(--radius) 0 0;
+  margin-top: 0 !important;
+  box-shadow: none;
+  z-index: 2;
+  flex-shrink: 0;
+  width: 100%; /* Ensure it spans full width */
+  margin-bottom: var(--space-sm); /* Add margin-bottom for spacing */
+}
+
+/* Styles for source form and banner area - ensure they also span full width */
+#bingeSourceFormArea,
+#bingeBannerArea {
+  width: 100%;
+  flex-shrink: 0;
+  padding: 0; /* Remove padding here, content inside will have padding */
+  margin-bottom: var(--space-sm); /* Add margin-bottom for spacing */
+}
+
+/* Styles for the forms/banners themselves within their areas */
+.binge-source-form, .binge-banner {
+  padding: var(--space-sm); /* Apply padding to the actual content */
+  background: var(--color-bg-alt);
+  border-radius: var(--radius);
+  border-top: none; /* Removed border */
+  border-bottom: none; /* Removed border */
+  position: relative;
+  z-index: 1;
+  align-items: flex-start; /* Align form elements to the left */
+  flex-shrink: 0; /* Prevent form from growing */
+  width: 100%; /* Ensure it takes full width */
+}
+
+
+/* New container for player and chat */
+.binge-content-area {
+  display: flex;
+  flex-direction: column; /* Default to column for mobile */
+  flex-grow: 1; /* Allow it to take remaining vertical space */
+  gap: var(--space-sm);
+  width: 100%; /* Take full width of binge-root */
+  min-height: 0 !important; /* Allow shrinking */
+  padding: 0; /* Remove padding here, player and chat will have padding */
+  height: 100%; /* Ensure it takes full height of parent */
+  max-height: 100%; /* Ensure it doesn't exceed parent height */
+  overflow: hidden !important;
+}
+
+/* Desktop layout for binge-content-area */
+@media (min-width: 901px) {
+  .binge-content-area {
+    flex-direction: row; /* Horizontal layout for desktop */
+    flex-wrap: nowrap; /* Prevent wrapping */
+    align-items: stretch; /* Stretch items to fill height */
+    height: 100%; /* Take full height of its parent (binge-root) */
+    gap: var(--space-sm);
+  }
+
+  /* --- Correction: Left column for source+player, right column for chat --- */
+  .binge-content-area {
+    /* No change, keep as row */
+  }
+  .binge-both-left {
+    display: flex;
+    flex-direction: column;
+    flex: 2 1 0%;
+    max-width: 66.66%;
+    min-width: 0 !important; /* Ensure it can shrink */
+    margin-right: var(--space-sm);
+    gap: var(--space-sm);
+    height: 100%;
+    overflow: hidden !important;
+    min-height: 0 !important; /* Ensure it can shrink */
+    max-height: 100%; /* Ensure it doesn't exceed parent height */
+  }
+  /* Removed .binge-player block from here to prevent overrides */
+  #bingePlayerArea {
+    width: 100%;
+    margin-bottom: 0;
+    flex: 1 1 auto; /* Make bingePlayerArea a flexible item */
+    min-height: 0 !important; /* Allow it to shrink */
+    overflow: hidden; /* Contain its content */
+    display: flex; /* Make it a flex container */
+    flex-direction: column; /* Stack its children vertically */
+  }
+  #bingeSourceFormArea {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+    flex-shrink: 0; /* Prevent it from shrinking */
+  }
+  .binge-chat-wrapper {
+    flex: 1 1 0%;
+    max-width: 33.33%;
+    min-width: 320px;
+    min-height: 0 !important;
+    height: 100%;
+    border-radius: var(--radius);
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface);
+  }
+}
+
+/* --- Binge Player --- */
+.binge-player {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  border-radius: var(--radius);
+  overflow: hidden !important;
+  margin: 0;
+  aspect-ratio: 16/9;
+  width: 100%;
+  max-width: 100%;  /* ADDED: never wider than parent */
+  height: 100%; /* Changed from auto to 100% for flex containment */
+  z-index: 1;
+  /* Consolidated flex properties into shorthand */
+  flex: 1 1 0%; /* Make it a flexible child of binge-both-left, allowing it to shrink */
+  flex-direction: column; /* Keep flex-direction for internal layout */
+  min-height: 0 !important; /* Crucial for allowing it to shrink */
+  max-height: 100%; /* Ensure it doesn't exceed parent height */
+}
+
+/* Ensure ambient background is absolutely positioned and behind the video/iframe */
+.binge-player .binge-ambient-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%; height: 100%;
+  z-index: 0; /* Behind video/iframe (which are z-index: auto/1) */
+  opacity: 0.1;
+  filter: blur(80px) saturate(180%);
+  background: linear-gradient(45deg, var(--color-accent), #f4c542);
+  transform: scale(1.5);
+  transition: all 1s ease;
+  pointer-events: none;
+  border-radius: var(--radius); /* match player for rounded corners */
+}
+
+.binge-player video,
+.binge-player iframe {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;     /* ADDED: never overflow horizontally */
+  max-height: 100%;    /* ADDED: never overflow vertically */
+  object-fit: contain; /* Ensures aspect ratio is preserved */
+  border-radius: var(--radius);
+  background: #000; /* Changed from transparent to #000 as a fallback */
+  display: block;
+  position: static;    /* REMOVED absolute positioning */
+  z-index: 1;
+}
+
+
+.binge-source-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  background: var(--color-bg-alt);
+  border-radius: var(--radius); /* Apply radius for consistency */
+  border-top: none; /* Removed border */
+  border-bottom: none; /* Removed border */
+  position: relative;
+  z-index: 1;
+  align-items: flex-start; /* Align form elements to the left */
+  flex-shrink: 0; /* Prevent form from growing */
+  width: 100%; /* Ensure it takes full width */
+}
+
+.binge-source-form label {
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.binge-source-form input[type="text"] {
+  width: 100%;
+  margin-bottom: var(--space-xs);
+}
+
+.binge-source-form .binge-upload-btn {
+  margin-top: var(--space-xs);
+}
+
+.binge-source-form .binge-host-btn {
+  margin-top: var(--space-xs);
+  min-width: 100px;
+  margin-left: auto; /* Push button to the right */
+}
+
+.binge-chat-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%; /* Default for mobile, added flex-basis 0% */
+  background: var(--color-surface);
+  padding: 0;
+  margin: 0;
+  border-radius: var(--radius); /* Default radius for mobile */
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  min-height: 0 !important; /* Ensure chat wrapper can shrink */
+  height: 100%; /* Take full height of parent */
+  max-height: 100%; /* Ensure it doesn't exceed parent height */
+}
+
+/* Desktop layout for binge-chat-wrapper */
+@media (min-width: 901px) {
+  .binge-chat-wrapper {
+    flex: 1; /* Occupy 1/3 of space */
+    max-width: 33.33%;
+    min-height: 0 !important; /* Allow it to shrink if needed by flex container */
+    height: 100%; /* Explicitly set height to fill parent */
+    border-radius: var(--radius); /* Apply radius for desktop */
+  }
+}
+
+.binge-chat-wrapper .chat-area {
+  flex: 1;
+  min-height: 100px;
+  overflow-y: auto;
+  padding: var(--space-sm);
+  background: var(--color-bg);
+}
+
+.binge-chat-wrapper .chat-form {
+  flex-shrink: 0;
+  padding: var(--space-sm);
+  background: var(--color-bg-alt);
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+.binge-chat-wrapper .message-tile {
+  max-width: 76%;
+}
+
+.binge-banner {
+  background: var(--color-accent-muted);
+  color: var(--color-text);
+  border-radius: var(--radius);
+  padding: var(--space-xs) var(--space-sm);
+  margin: var(--space-sm);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  justify-content: space-between;
+  font-size: var(--font-size-base);
+  z-index: 1;
+  position: relative;
+}
+
+.binge-peer-notify {
+  background: var(--color-bg-alt);
+  color: var(--color-accent);
+  border-radius: var(--radius);
+  padding: var(--space-xs) var(--space-sm);
+  margin: var(--space-sm);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  z-index: 1;
+  position: relative;
+}
+
+@media (max-width: 900px) {
+  .binge-root { 
+    max-width: 100vw; 
+    border-radius: 0; 
+    flex: 1; /* Ensures it fills height on larger mobile/tablet */
+  }
+  
+  .binge-header { 
+    border-radius: 0; 
+    padding: var(--space-xs);
+  }
+  
+  .binge-player {
+    padding: var(--space-xs);
+  }
+  
+  .binge-source-form { 
+    padding: var(--space-xs); 
+  }
+  
+  .binge-chat-wrapper .chat-area {
+    padding: var(--space-xs);
+  }
+  
+  .binge-chat-wrapper .chat-form {
+    padding: var(--space-xs);
+  }
+  
+  .binge-banner,
+  .binge-peer-notify {
+    margin: var(--space-xs);
+  }
+}
+
+@media (max-width: 500px) {
+  .binge-root {
+    flex: 1; /* Ensures it fills height on smaller mobile */
+  }
+  
+  .binge-header {
+    padding: var(--space-xxs);
+  }
+  
+  .binge-player {
+    padding: var(--space-xxs);
+  }
+  
+  .binge-source-form {
+    padding: var(--space-xxs);
+  }
+  
+  .binge-chat-wrapper .chat-area {
+    padding: var(--space-xxs);
+  }
+
+  .binge-chat-wrapper .chat-form {
+    padding: var(--space-xxs);
+  }
+  
+  .binge-banner,
+  .binge-peer-notify {
+    margin: var(--space-xxs);
+  }
+}
+
+/* --- Binge Chat Container --- */
+/* This section might be redundant or could be simplified if binge-chat-wrapper handles everything */
+.binge-chat-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0 !important;
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+}
+
+.binge-chat-container .chat-area {
+  flex: 1;
+  min-height: 0 !important;
+  overflow-y: auto;
+  padding: var(--space-sm);
+  margin: 0;
+  background: transparent;
+}
+
+.binge-chat-container .chat-form {
+  flex: 0 0 auto;
+  position: relative;
+  border-radius: 0;
+  margin: 0;
+  padding: var(--space-sm);
+  background: var(--color-bg-alt);
+  border-top: none; /* Removed border */
+}
+
+@media (max-width: 900px) {
+  .binge-chat-container {
+    border-radius: 0;
+  }
+
+  .binge-chat-container .chat-area {
+    padding: var(--space-xs);
+  }
+
+  .binge-chat-container .chat-form {
+    padding: var(--space-xs);
+  }
+}
+
+@media (max-width: 500px) {
+  .binge-chat-container .chat-area {
+    padding: var(--space-xxs);
+  }
+
+  .binge-chat-container .chat-form {
+    padding: var(--space-xxs);
+  }
+}
+
+/* --- Footer Buttons Container --- */
+.text-buttons-container {
+  display: flex; /* Added for centering */
+  justify-content: center; /* Added for horizontal centering */
+  align-items: center;    /* Added for vertical centering of items */
+  align-content: center;  /* Added for centering wrapped lines */
+  width: 100%; /* Ensure it takes full width to center its content */
+  margin-top: auto; /* Push to bottom if main content is short */
+  padding: var(--space-sm);
+  background: var(--color-bg);
+  border-top: none; /* Removed border */
+  gap: var(--space-sm);
+  box-sizing: border-box;
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  flex-shrink: 0; /* Prevent footer from shrinking */
+}
+
+/* When binge session is active, footer should remain visible */
+body:has(#bingeSection:not(.hidden)) .text-buttons-container {
+  display: flex !important; /* Ensure it's visible */
+}
+
+.text-button {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.text-button:hover {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.text-button-separator {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+/* New styles for centering start session button and image container */
+/* main.center-start-session is removed, centering is now handled by main's flex properties */
+
+.start-session-container {
+  display: flex;
+  flex-direction: column; /* Stack image and button vertically */
+  justify-content: center; /* Center vertically within its own space */
+  align-items: center; /* Center horizontally */
+  width: 100%;
+  max-width: 448px; /* Limit width to prevent it from stretching too much */
+  margin: auto; /* This will center it vertically and horizontally within the main flex item */
+  gap: var(--space-sm); /* Space between image and button */
+}
+
+/* Hide start button container when session is active */
+.start-session-container.hidden {
+  display: none !important;
+}
+
+/* Styles for the new image container */
+.image-container {
+  margin-bottom: var(--space-sm); /* Space between image and button */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 448px; /* Fixed width for desktop */
+  height: 276px; /* Fixed height for desktop */
+  border-radius: var(--radius);
+  overflow: hidden; /* Ensure image respects border-radius */
+  /* background: var(--color-card); /* Background for the image container */
+  padding: 0; /* Removed padding */
+}
+
+.app-image {
+  width: 100%; /* Make image fill the container */
+  height: 100%; /* Make image fill the container */
+  object-fit: cover; /* Ensure image covers the area without distortion */
+  display: block; /* Remove extra space below image */
+  border-radius: var(--radius); /* Apply border-radius to the image */
+}
+
+@media (max-width: 700px) {
+  .image-container {
+    width: 100%; /* Full width on mobile */
+    height: auto; /* Auto height to maintain aspect ratio */
+    aspect-ratio: 448 / 276; /* Maintain aspect ratio on smaller screens */
+    max-width: 448px; /* Ensure it doesn't exceed original desktop width */
+  }
+}
