@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>NamSpace</title>
+  <title>NimSpace</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="assets/favicon.png" type="image/png">
   <link rel="stylesheet" href="style.css">
@@ -14,17 +14,17 @@
   <header>
     <div class="header-title">
       <!-- App logo with responsive sizing -->
-      <img src="assets/icon.png" alt="NIMFILE Icon" class="app-logo">
+      <img src="assets/icon.png" alt="NimSpace Icon" class="app-logo">
     </div>
   </header>
   <main>
-    <h1 class="visually-hidden">PeerJS Session Demo</h1>
+    <h1 class="visually-hidden">NimSpace Session</h1>
     <!-- Stack Start: collapsed by default, host expands via JS -->
     <div id="infoStack" class="exp-stack stack-collapsed">
       <!-- stackToggleBtn is initially hidden and shown when a session starts -->
-      <button id="stackToggleBtn" class="stack-toggle-btn hidden" title="Expand/collapse details" aria-label="Expand/collapse details">
+      <button id="stackToggleBtn" class="stack-toggle-btn hidden" title="Expand or collapse session details" aria-label="Expand or collapse session details">
         <span class="material-icons stack-arrow">expand_more</span>
-        <span class="stack-toggle-label">Show details</span>
+        <span class="stack-toggle-label">Show Details</span>
         <span id="collapsedUserSummary"></span>
       </button>
       <div class="stack-content">
@@ -35,36 +35,35 @@
             <!-- This div will host the Lottie animation -->
             <div id="lottie-animation-container" style="width: 100%; height: 100%;"></div>
           </div>
-          <button id="startBtn" class="primary-btn">Start Session</button>
+          <button id="startBtn" class="primary-btn">Start New Session</button>
         </div>
         <div id="sessionInfo" class="hidden card">
-          <!-- Removed "Your PeerJS ID" line -->
           <div id="linkSection" class="hidden">
-            <strong>Join Link:</strong>
+            <strong>Share this link to invite others:</strong>
             <div class="join-link-row">
               <a href="#" id="joinLink" target="_blank"></a>
-              <button id="copyLinkBtn" title="Copy link" aria-label="Copy link" class="icon-btn">
+              <button id="copyLinkBtn" title="Copy session link" aria-label="Copy session link" class="icon-btn">
                 <span class="material-icons">content_copy</span>
               </button>
             </div>
             <div class="qr-container" id="qrCodeContainer"> <!-- Added ID for easier hiding -->
-              <span class="qr-label">Scan QR Code to Join</span>
+              <span class="qr-label">Or scan this QR Code to join:</span>
               <div id="qrcode"></div>
             </div>
           </div>
         </div>
         <div id="statusSection" class="card hidden">
-          <strong>Status:</strong> <span id="status">Idle</span>
+          <strong>Session Status:</strong> <span id="status">Connecting...</span>
         </div>
         <section id="usernameSection" class="hidden card">
           <form id="usernameForm" autocomplete="off">
-            <label for="usernameInput"><strong>Username:</strong></label>
-            <input id="usernameInput" type="text" maxlength="20" />
-            <button type="submit" class="primary-btn">Set</button>
+            <label for="usernameInput"><strong>Your Username:</strong></label>
+            <input id="usernameInput" type="text" maxlength="20" placeholder="Enter your name" />
+            <button type="submit" class="primary-btn">Set Username</button>
           </form>
         </section>
         <section id="peersSection" class="hidden card">
-          <strong>Connected Peers:</strong>
+          <strong>Connected Users:</strong>
           <ul id="peersList"></ul>
         </section>
       </div>
@@ -74,14 +73,14 @@
     <section id="chatSection" class="hidden card chat-section">
       <div id="chatArea" class="chat-area"></div>
       <form id="chatForm" autocomplete="off" class="chat-form">
-        <button id="fileBtn" type="button" class="icon-btn file-btn" title="Send file" aria-label="Send file">
+        <button id="fileBtn" type="button" class="icon-btn file-btn" title="Send a file" aria-label="Send a file">
           <span class="material-icons">attach_file</span>
         </button>
-        <button id="bingeBtn" type="button" class="icon-btn binge-btn" title="Binge" aria-label="Binge">
+        <button id="bingeBtn" type="button" class="icon-btn binge-btn" title="Start shared media session" aria-label="Start shared media session">
           <span class="material-icons">local_activity</span>
         </button>
         <input id="fileInput" type="file" style="display:none" />
-        <input id="chatInput" type="text" placeholder="Type a message..." autocomplete="off" required />
+        <input id="chatInput" type="text" placeholder="Type your message here..." autocomplete="off" required />
         <button type="submit" class="primary-btn send-btn">
           <span class="material-icons">send</span>
         </button>
@@ -97,7 +96,7 @@
     <div class="text-buttons-container">
       <a href="terms.html" target="_blank" class="text-button">Terms & Conditions</a>
       <span class="text-button-separator">•</span>
-      <a href="about.html" target="_blank" class="text-button">About</a>
+      <a href="about.html" target="_blank" class="text-button">About NimSpace</a>
       <!-- Theme toggle button moved here -->
       <span class="text-button-separator">•</span>
       <button id="themeToggleBtn" title="Toggle theme" aria-label="Toggle theme" class="theme-toggle-btn">
