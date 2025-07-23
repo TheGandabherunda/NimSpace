@@ -4,7 +4,7 @@
 ![NIMFILE Logo](/assets/icon.png)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) 
-[![Live Demo](https://img.shields.io/badge/%F0%9F%9A%80-Live_Demo-green)](https://nimspace.example.com)  <!-- Replace with your actual URL -->
+[![Live Demo](https://img.shields.io/badge/%F0%9F%9A%80-Live_Demo-green)](https://projectsolutus.github.io/NimSpace/)  <!-- Replace with your actual URL -->
 
 ## Key Features 🚀
 
