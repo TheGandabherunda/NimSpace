@@ -4,7 +4,7 @@
 ![NIMFILE Logo](/assets/icon.png)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) 
-[![Live Demo](https://img.shields.io/badge/%F0%9F%9A%80-Live_Demo-green)](https://gandabherunda.js.org/NimSpace/)  <!-- Replace with your actual URL -->
+[![Live Demo](https://img.shields.io/badge/%F0%9F%9A%80-Live_Demo-green)](https://thegandabherunda.github.io/NimSpace/)  <!-- Replace with your actual URL -->
 
 ## Key Features 🚀
 
@@ -17,7 +17,7 @@
 | 📱 **Mobile Optimized** | Responsive design with keyboard-aware UI |
 
 ## Try It Now!
-[👉 **Live Demo**](https://gandabherunda.js.org/NimSpace/) <!-- Hyperlink for visibility -->
+[👉 **Live Demo**](https://thegandabherunda.github.io/NimSpace/) <!-- Hyperlink for visibility -->
 
 ## How It Works
 
